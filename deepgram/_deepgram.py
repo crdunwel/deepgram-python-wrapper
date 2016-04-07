@@ -1,14 +1,18 @@
 import json
 from urllib import request
+from os import environ
 
 
 class Deepgram:
 
     baseURI = 'http://api.deepgram.com/'
     headers = {'Content-Type': 'application/json'}
+    KEY_ENVVAR = 'DEEPGRAM_USER_ID'
 
     def __init__(self, opts=None):
         self.opts = opts if type(opts) is dict else {}
+        if self.KEY_ENVVAR in environ:
+            self.opts['userID'] = environ.get(self.KEY_ENVVAR)
 
     def _post(self, payload):
         try:
